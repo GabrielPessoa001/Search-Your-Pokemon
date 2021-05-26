@@ -35,29 +35,33 @@ export const Error = styled.div`
 
 export const MyForm = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+
+  justify-content: space-around;
   align-items: center;
 
-  width: 100%;
+  width: 80%;
 `;
-
-export const Label = styled.label``;
 
 export const Input = styled.input`
   margin: 5px 0;
+
+  width: 75%;
 `;
 
-export const Button = styled.input`
-  width: 40%;
+export const Button = styled.button`
+  width: 49%;
   margin-top: 5px;
+
+  cursor: pointer;
 `;
 
 export const GroupButtons = styled.div`
-  width: 25%;
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  width: 20%;
 `;
 
 export const GroupCards = styled.div`
@@ -70,6 +74,8 @@ export const GroupCards = styled.div`
 export const Card = styled.div`
   flex: 1 0 15%;
   margin: 12px;
+
+  cursor: pointer;
 
   text-align: center;
   align-items: center;
@@ -89,7 +95,3 @@ export const DataCard = styled.h4`
 export const Select = styled.select``;
 
 export const Option = styled.option``;
-
-export const NoneDiv = styled.div`
-  margin-top: 15px;
-`;

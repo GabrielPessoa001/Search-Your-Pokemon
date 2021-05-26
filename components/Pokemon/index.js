@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 
+import Loading from '../Loading';
+
 import axios from 'axios';
+
+import Link from "next/link"
 
 import {
   Container,
   Input, 
-  Label, 
   Card, 
   GroupCards,
   DataCard,
   MyForm,
-  NoneDiv
+  GroupButtons,
+  Button
 } from './style';
 
 const Pokemon = () => {
@@ -40,18 +44,6 @@ const Pokemon = () => {
     searchPokemons()
   }, [])
 
-  async function pokemonImage (URL) {
-    let response;
-
-    try {
-      response = await axios.get(URL)
-
-      console.log(response)
-    } catch (e) {
-      console.log(`Erro encontrado: ${ e }`)
-    }
-  }
-
   function cleanState () {
     setConf('')
     setQuery('')
@@ -65,29 +57,37 @@ const Pokemon = () => {
 
   return (
     <Container>
-      <MyForm>
-        <Label>
-          Pesquisar por nome <Input value={ query } onChange={ e => setQuery(e.target.value) } />
-        </Label>
-        
-        <br/>
-      </MyForm>
+      {
+        pokemons.length > 0
+        ?
+        <>
+          <MyForm>
+            <Input placeholder="Busca por nome" value={ query } onChange={ e => setQuery(e.target.value) } />
 
-      <GroupCards>
-        {
-          pokemons
-          ?
-          pokemons.map((p, index) => (
-            <Card key={ p.name }>
-              <img src={ `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ index + 1 }.png` } />
+            <GroupButtons>
+              <Button>Buscar</Button>
+              <Button>Limpar</Button>
+            </GroupButtons>
+          </MyForm>
 
-              <DataCard>{ p.name } { index }</DataCard>
-            </Card>
-          ))
-          :
-          <NoneDiv> NADA </NoneDiv>
-        }
-      </GroupCards>
+          <GroupCards>
+            {
+              pokemons.map((p, index) => (
+                <Link href={ `/pokemon/${ index + 1 }` }>
+                  <Card key={ p.name }>
+                    <img src={ `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ index + 1 }.png` } />
+
+                    <DataCard>{ p.name }</DataCard>
+                  </Card>
+                </Link>
+              ))
+            }
+          </GroupCards>
+        </>
+        :
+        <Loading />
+      }
+
     </Container>
   )
 }
