@@ -20,19 +20,20 @@ import {
 const Pokemon = () => {
   const [ pokemons = [], setPokemons ] = useState([])
   const [ query, setQuery ] = useState('')
+  const [ data, setData ] = useState('')
+
   const [ conf, setConf ] = useState('')
 
+  const [ urlPokemon, setUrlPokemon ] = useState('https://pokeapi.co/api/v2/pokemon')
+
   useEffect(() => {
-    async function searchPokemons () {
-      const URL_POKEMON = `https://pokeapi.co/api/v2/pokemon?limit=898`;
-  
+    async function searchPokemons () {  
       let response;
       
       try {
-        response = await axios.get(URL_POKEMON);
-  
-        console.log(response)
-
+        response = await axios.get(urlPokemon);
+        
+        setData(response.data)
         setPokemons(response.data.results)
       } catch (e) {
         errorState
@@ -44,14 +45,31 @@ const Pokemon = () => {
     searchPokemons()
   }, [])
 
+  async function newRequest (url) {
+    let response;
+    
+    try {
+      response = await axios.get(url);
+
+      setData(response.data)
+      setPokemons(response.data.results)
+    } catch (e) {
+      errorState
+
+      console.log(`Erro encontrado: ${ e }`)
+    }
+  }
+
+  function nextUrl () { newRequest(data.next) }
+  function previousUrl () { newRequest(data.previous) }
+
   function cleanState () {
     setConf('')
     setQuery('')
   }
 
   function errorState () {
-    cleanState
-
+    cleanState()
     setConf('Not found')
   }
 
@@ -66,15 +84,20 @@ const Pokemon = () => {
 
             <GroupButtons>
               <Button>Buscar</Button>
-              <Button>Limpar</Button>
+              <Button onClick={ cleanState }>Limpar</Button>
+            </GroupButtons>
+
+            <GroupButtons>
+            <Button onClick={ previousUrl }>PREVIOUS</Button>
+              <Button onClick={ nextUrl }>NEXT</Button>
             </GroupButtons>
           </MyForm>
 
           <GroupCards>
             {
               pokemons.map((p, index) => (
-                <Link href={ `/pokemon/${ index + 1 }` }>
-                  <Card key={ p.name }>
+                <Link key={ p.name } href={ `/pokemon/${ index + 1 }` }>
+                  <Card>
                     <img src={ `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ index + 1 }.png` } />
 
                     <DataCard>{ p.name }</DataCard>

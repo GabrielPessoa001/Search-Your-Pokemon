@@ -36,7 +36,7 @@ function UniquePokemon () {
         let response_located = await axios.get(URL_LOCATED)
 
         setPokemon(response.data)
-        setLocatedIn(response_located.data)
+        setLocatedIn(response_located.data.length > 0 ? response_located.data :  [{ location_area: { name: "Evolução de um Pokémon" } }] )
         setImageUrl(response.data.sprites.front_default)
       } catch (e) {
         console.log(`Erro: ${ e }`)
@@ -72,7 +72,7 @@ function UniquePokemon () {
             locatedIn.length > 0
             ?
             <>
-              <TitleLocated>Localizado em:</TitleLocated>
+              <TitleLocated>Achado em:</TitleLocated>
 
               {
                 locatedIn.map((c, index) => (
@@ -81,7 +81,7 @@ function UniquePokemon () {
               }
             </>
             :
-            <TitleLocated>Não é encontrado, é uma evolução</TitleLocated>
+            <TitleLocated>Loading...</TitleLocated>
           }
         </PokemonLocated>
       </CardPokemon>
