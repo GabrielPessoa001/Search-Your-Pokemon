@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
-import { Container,
-         Input, 
-         Label, 
-         Card, 
-         GroupCards,
-         DataCard,
-         MyForm,
-         NoneDiv } from './style';
+import {
+  Container,
+  Input, 
+  Label, 
+  Card, 
+  GroupCards,
+  DataCard,
+  MyForm,
+  NoneDiv
+} from './style';
 
 const Pokemon = () => {
   const [ pokemons = [], setPokemons ] = useState([])
