@@ -45,3 +45,16 @@ export const PokemonType = styled.div`
 export const TitleType = styled.h3`
   margin: 0;
 `;
+
+export const PokemonLocated = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  margin-top: 15px;
+`;
+
+export const TitleLocated = styled.h5`
+  margin: 0;
+`;

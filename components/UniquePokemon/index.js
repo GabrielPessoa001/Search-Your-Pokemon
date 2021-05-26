@@ -13,11 +13,14 @@ import {
   TitleAndImage,
   Title,
   PokemonType,
-  TitleType
+  TitleType,
+  PokemonLocated,
+  TitleLocated
 } from "./style"
 
 function UniquePokemon () {
   const [ pokemon = [], setPokemon ] = useState([])
+  const [ locatedIn = [], setLocatedIn ] = useState([])
   const [ imageUrl, setImageUrl ] = useState('')
 
   const router = useRouter()
@@ -27,10 +30,13 @@ function UniquePokemon () {
     async function getPokemon () {
       try {
         const URL_POKEMON = `https://pokeapi.co/api/v2/pokemon/${ id }/`
+        const URL_LOCATED = `https://pokeapi.co/api/v2/pokemon/${ id }/encounters`
 
         let response = await axios.get(URL_POKEMON)
+        let response_located = await axios.get(URL_LOCATED)
 
         setPokemon(response.data)
+        setLocatedIn(response_located.data)
         setImageUrl(response.data.sprites.front_default)
       } catch (e) {
         console.log(`Erro: ${ e }`)
@@ -60,6 +66,24 @@ function UniquePokemon () {
             <Loading />
           }
         </PokemonType>
+
+        <PokemonLocated>
+          {
+            locatedIn.length > 0
+            ?
+            <>
+              <TitleLocated>Localizado em:</TitleLocated>
+
+              {
+                locatedIn.map((c, index) => (
+                  <TitleLocated key={ index }>{ c.location_area.name }</TitleLocated>
+                ))
+              }
+            </>
+            :
+            <TitleLocated>Não é encontrado, é uma evolução</TitleLocated>
+          }
+        </PokemonLocated>
       </CardPokemon>
     </Container>
   )
