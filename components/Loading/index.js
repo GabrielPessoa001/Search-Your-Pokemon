@@ -1,3 +1,11 @@
 import { Container } from "./style"
 
-export default () => <Container>L o a d i n g . . .</Container>
+function Loading () {
+  return (
+    <Container>
+      L o a d i n g . . .
+    </Container>
+  )
+}
+
+export default Loading
