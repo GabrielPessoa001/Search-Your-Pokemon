@@ -5,6 +5,7 @@ import Loading from '../Loading';
 import axios from 'axios';
 
 import Link from "next/link"
+import { useRouter } from 'next/router'
 
 import {
   Container,
@@ -22,16 +23,20 @@ const Pokemon = () => {
   const [ query, setQuery ] = useState('')
   const [ data, setData ] = useState('')
 
+  const [ id, setId ] = useState(1)
+
   const [ conf, setConf ] = useState('')
 
-  const [ urlPokemon, setUrlPokemon ] = useState('https://pokeapi.co/api/v2/pokemon')
+  const Router = useRouter()
 
   useEffect(() => {
-    async function searchPokemons () {  
+    async function searchPokemons () {
+      const URL_POKEMON = `https://pokeapi.co/api/v2/pokemon`
+
       let response;
       
       try {
-        response = await axios.get(urlPokemon);
+        response = await axios.get(URL_POKEMON);
         
         setData(response.data)
         setPokemons(response.data.results)
@@ -60,8 +65,19 @@ const Pokemon = () => {
     }
   }
 
-  function nextUrl () { newRequest(data.next) }
-  function previousUrl () { newRequest(data.previous) }
+  function nextUrl () {
+    id + 20 > 898 ? setId(id) : setId(id+20)
+    newRequest(data.next)
+  }
+
+  function previousUrl () {
+    id - 20 < 0 ? setId(id) : setId(id-20)
+    newRequest(data.previous)
+  }
+
+  function searchPokemon () {
+    Router.replace(`/pokemon/${ query }`)
+  }
 
   function cleanState () {
     setConf('')
@@ -83,22 +99,17 @@ const Pokemon = () => {
             <Input placeholder="Busca por nome" value={ query } onChange={ e => setQuery(e.target.value) } />
 
             <GroupButtons>
-              <Button>Buscar</Button>
+              <Button onClick={ searchPokemon }>Buscar</Button>
               <Button onClick={ cleanState }>Limpar</Button>
-            </GroupButtons>
-
-            <GroupButtons>
-            <Button onClick={ previousUrl }>PREVIOUS</Button>
-              <Button onClick={ nextUrl }>NEXT</Button>
             </GroupButtons>
           </MyForm>
 
           <GroupCards>
             {
-              pokemons.map((p, index) => (
-                <Link key={ p.name } href={ `/pokemon/${ index + 1 }` }>
+              pokemons.map((p, index)=> (
+                <Link key={ p.name } href={ `/pokemon/${ id + index }` }>
                   <Card>
-                    <img src={ `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ index + 1 }.png` } />
+                    <img src={ `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${ id + index }.png` } />
 
                     <DataCard>{ p.name }</DataCard>
                   </Card>
@@ -106,11 +117,15 @@ const Pokemon = () => {
               ))
             }
           </GroupCards>
+
+          <GroupButtons>
+            <Button onClick={ previousUrl }> ◀ </Button>
+            <Button onClick={ nextUrl }> ▶ </Button>
+          </GroupButtons>
         </>
         :
         <Loading />
       }
-
     </Container>
   )
 }

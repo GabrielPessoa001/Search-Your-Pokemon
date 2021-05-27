@@ -51,7 +51,6 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   width: 49%;
-  margin-top: 5px;
 
   cursor: pointer;
 `;
@@ -59,6 +58,7 @@ export const Button = styled.button`
 export const GroupButtons = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 
   width: 20%;
@@ -69,10 +69,15 @@ export const GroupCards = styled.div`
   flex-wrap: wrap;
 
   width: 100%;
+  height: 55vh;
+
+  margin: 20px 0;
+
+  overflow: auto;
 `;
 
 export const Card = styled.div`
-  flex: 1 0 15%;
+  flex: 1 0 8%;
   margin: 12px;
 
   cursor: pointer;
@@ -84,8 +89,6 @@ export const Card = styled.div`
 
   box-shadow: 3px 3px 3px 3px rgba(0, 0, 0, 0.4) !important;
   border-radius: 5px;
-
-  margin-top: 20px;
 `;
 
 export const DataCard = styled.h4`

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 
 import axios from "axios"
 
@@ -72,7 +71,7 @@ function UniquePokemon () {
             locatedIn.length > 0
             ?
             <>
-              <TitleLocated>Achado em:</TitleLocated>
+              <TitleLocated>Localizado em: </TitleLocated>
 
               {
                 locatedIn.map((c, index) => (
