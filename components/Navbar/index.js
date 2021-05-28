@@ -1,4 +1,7 @@
-import { Container, Title } from './style';
+import {
+  Container,
+  Title
+} from './style';
 
 function Navbar () {
   return (

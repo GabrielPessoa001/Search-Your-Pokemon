@@ -3,9 +3,11 @@ import {
 } from "./style"
 
 function Loading () {
+
+
   return (
     <Container>
-      L o a d i n g . . .
+      Random Pokémon
     </Container>
   )
 }
