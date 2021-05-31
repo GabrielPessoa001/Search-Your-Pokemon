@@ -1,5 +1,5 @@
 import Navbar from '../components/Navbar';
-import Random from '../components/PokemonRandom';
+import Random from '../components/RandomPokemon';
 
 export default function Home () {
   return (

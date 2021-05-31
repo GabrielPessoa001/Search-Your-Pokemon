@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-
-import Loading from '../Loading';
+import { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
 import Link from "next/link"
 import { useRouter } from 'next/router'
+
+import Loading from '../Loading';
 
 import {
   Container,
@@ -24,8 +24,6 @@ const Pokemon = () => {
   const [ data, setData ] = useState('')
 
   const [ id, setId ] = useState(1)
-
-  const [ conf, setConf ] = useState('')
 
   const Router = useRouter()
 
@@ -75,18 +73,11 @@ const Pokemon = () => {
     newRequest(data.previous)
   }
 
-  function searchPokemon () {
-    Router.replace(`/pokemon/${ query }`)
-  }
+  function searchPokemon () { Router.replace(`/pokemon/${ query }`) }
 
   function cleanState () {
     setConf('')
     setQuery('')
-  }
-
-  function errorState () {
-    cleanState()
-    setConf('Not found')
   }
 
   return (
